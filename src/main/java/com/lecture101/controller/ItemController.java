@@ -57,6 +57,7 @@ public class ItemController {
         return "redirect:/";
     }
 
+
     @GetMapping(value = "/admin/item/{itemId}")
     public String itemDtl(@PathVariable("itemId") Long itemId, Model model){
 

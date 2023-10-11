@@ -1,13 +1,19 @@
 package com.lecture101.controller;
 
+import com.lecture101.dto.CommentDTO;
 import com.lecture101.dto.ItemFormDto;
 import com.lecture101.dto.ItemSearchDto;
 import com.lecture101.entity.Item;
+import com.lecture101.entity.Member;
+import com.lecture101.service.CommentService;
 import com.lecture101.service.ItemService;
+import com.lecture101.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,6 +33,8 @@ import java.util.Optional;
 public class ItemController {
 
     private final ItemService itemService;
+    private final MemberService memberService;
+    private final CommentService commentService;
 
     @GetMapping(value = "/admin/item/new")
     public String itemForm(Model model){
@@ -107,10 +115,19 @@ public class ItemController {
         return "item/itemMng";
     }
 
+    // 1011 ktb 수정
     @GetMapping(value = "/item/{itemId}")
-    public String itemDtl(Model model, @PathVariable("itemId") Long itemId){
+    public String itemDtl(Model model, @PathVariable("itemId") Long itemId, @AuthenticationPrincipal User user){
         ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
         model.addAttribute("item", itemFormDto);
+
+        List<CommentDTO> comments = commentService.findByItemId(itemId); // 댓글 데이터를 조회합니다.
+        model.addAttribute("comments", comments); // 댓글 데이터를 모델에 추가합니다.
+
+        if (user != null) {
+            Member member = memberService.findByEmail(user.getUsername());
+            model.addAttribute("member", member);
+        }
         return "item/itemDtl";
     }
 

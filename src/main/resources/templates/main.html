@@ -59,7 +59,7 @@
                             <div th:each="type : ${T(com.lecture101.constant.Category).values()}"
                                 th:if="${item.Category == type}"
                                 th:text="${type.displayName}">
-<!--                                th:text="${#strings.isEmpty(type.displayName) ? '' : type.displayName}">-->
+<!--
                             </div>
                             <h4 class="card-title">[[${item.itemNm}]]</h4>
                             <p class="card-text">[[${item.itemDetail}]]</p>

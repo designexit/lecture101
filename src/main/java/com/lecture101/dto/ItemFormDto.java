@@ -1,6 +1,8 @@
 package com.lecture101.dto;
 
+import com.lecture101.constant.Category;
 import com.lecture101.constant.ItemSellStatus;
+import com.lecture101.constant.LectureType;
 import com.lecture101.entity.Item;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,19 +18,26 @@ public class ItemFormDto {
 
     private Long id;
 
-    @NotBlank(message = "상품명은 필수 입력 값입니다.")
+    @NotBlank(message = "클래스명은 필수 입력 값 입니다.")
     private String itemNm;
 
     @NotNull(message = "가격은 필수 입력 값입니다.")
     private Integer price;
 
-    @NotBlank(message = "상품 상세는 필수 입력 값입니다.")
+    @NotBlank(message = "클래스 소개는 필수 입력 값 입니다.")
     private String itemDetail;
 
     @NotNull(message = "재고는 필수 입력 값입니다.")
     private Integer stockNumber;
 
+    @NotNull(message = "클래스 상태는 필수 입력 값입니다.")
     private ItemSellStatus itemSellStatus;
+
+    @NotNull(message = "카테고리는 필수 입력 값입니다.")
+    private Category category;
+
+    @NotNull(message = "클래스 타입은 필수 입력 값입니다.")
+    private LectureType lectureType;
 
     private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 

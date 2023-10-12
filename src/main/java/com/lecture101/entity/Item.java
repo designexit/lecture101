@@ -1,6 +1,8 @@
 package com.lecture101.entity;
 
+import com.lecture101.constant.Category;
 import com.lecture101.constant.ItemSellStatus;
+import com.lecture101.constant.LectureType;
 import com.lecture101.dto.ItemFormDto;
 import com.lecture101.exception.OutOfStockException;
 import lombok.Getter;
@@ -35,7 +37,13 @@ public class Item extends BaseEntity {
     private String itemDetail; //상품 상세 설명
 
     @Enumerated(EnumType.STRING)
-    private ItemSellStatus itemSellStatus; //상품 판매 상태
+    private ItemSellStatus itemSellStatus; // 강의 상태
+
+    @Enumerated(EnumType.STRING)
+    private LectureType lectureType; // 클래스 타입
+
+    @Enumerated(EnumType.STRING)
+    private Category category; // 카테고리
 
     public void updateItem(ItemFormDto itemFormDto){
         this.itemNm = itemFormDto.getItemNm();
@@ -43,6 +51,8 @@ public class Item extends BaseEntity {
         this.stockNumber = itemFormDto.getStockNumber();
         this.itemDetail = itemFormDto.getItemDetail();
         this.itemSellStatus = itemFormDto.getItemSellStatus();
+        this.lectureType = itemFormDto.getLectureType();
+        this.category = itemFormDto.getCategory();
     }
 
     public void removeStock(int stockNumber){

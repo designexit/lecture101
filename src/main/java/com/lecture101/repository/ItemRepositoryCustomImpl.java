@@ -94,6 +94,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                 .select(
                         new QMainItemDto(
                                 item.id,
+                                item.category,
                                 item.itemNm,
                                 item.itemDetail,
                                 itemImg.imgUrl,

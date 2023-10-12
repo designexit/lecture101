@@ -338,8 +338,11 @@
             <td th:text="${comment.commentWriter}"></td>
             <td th:text="${comment.commentContents}"></td>
             <td>
-                <a th:href="@{/comment/edit/{commentId}(commentId=${comment.id})}">수정</a>
-                <a th:href="@{/comment/delete/{id}(id=${comment.id})}" class="btn btn-danger">삭제</a>
+                <!--로그인을 한 유저, 로그인을 한 유저의 name 과 commentWriter가 일치하면 수정과 삭제버튼 활성화-->
+                <a th:if="${member != null and comment.commentWriter == member.name}"
+                   th:href="@{/comment/edit/{commentId}(commentId=${comment.id})}">수정</a>
+                <a th:if="${member != null and comment.commentWriter == member.name}"
+                   th:href="@{/comment/delete/{id}(id=${comment.id})}" class="btn btn-danger">삭제</a>
             </td>
     </table>
     </table>

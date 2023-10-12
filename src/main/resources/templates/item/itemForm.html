@@ -103,8 +103,6 @@
                 <span class="input-group-text">가격</span>
             </div>
             <input type="number" th:field="*{price}" class="form-control" placeholder="클래스의 가격을 입력해 주세요">
-            <!--<input type="text" th:field="*{price}" class="form-control" th:value="${#numbers.formatInteger( *{price})}" placeholder="클래스의 가격을 입력해 주세요">-->
-            <!--<div data-th-text="${#numbers.formatInteger(price, 3, 'COMMA') + '원'}"></div>-->
         </div>
         <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="fieldError">Incorrect data</p>
 

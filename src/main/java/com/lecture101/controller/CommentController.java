@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -47,15 +48,19 @@ public class CommentController {
     }
 
     // 리뷰 수정
+    // 리뷰 수정
     @PostMapping("/update/{id}")
-    public ResponseEntity<?> updateComment(@PathVariable Long id, @ModelAttribute CommentDTO commentDTO) {
+    public String updateComment(@PathVariable Long id, @ModelAttribute CommentDTO commentDTO, RedirectAttributes redirectAttributes) {
         try {
             CommentDTO updatedComment = commentService.update(id, commentDTO);
-            return new ResponseEntity<>(updatedComment, HttpStatus.OK);
+            redirectAttributes.addFlashAttribute("successMessage", "Comment updated successfully");
+            return "redirect:/item/" + updatedComment.getItemId();  // assuming CommentDTO has getItemId() method
         } catch (Exception e) {
-            return new ResponseEntity<>("Comment could not be updated", HttpStatus.INTERNAL_SERVER_ERROR);
+            redirectAttributes.addFlashAttribute("errorMessage", "Comment could not be updated");
+            return "redirect:/comment/edit/" + id;
         }
     }
+
 
     // 리뷰 삭제
     @GetMapping("/delete/{id}")

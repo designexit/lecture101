@@ -7,6 +7,7 @@ import lombok.Setter;
 
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -22,6 +23,15 @@ public class CommentEntity extends BaseEntity {
 
     @Column
     private String commentContents;
+
+    @Column(name = "creation_date")
+    private LocalDateTime creationDate;
+
+    @PrePersist
+    public void prePersist() {
+        this.creationDate = LocalDateTime.now();
+    }
+
 
     /* Board:Comment = 1:N */
     @ManyToOne(fetch = FetchType.LAZY)

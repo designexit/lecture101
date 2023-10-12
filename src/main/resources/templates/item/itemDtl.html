@@ -43,6 +43,42 @@
         #comment-list td:nth-child(3) a:hover {
             text-decoration: underline;
         }
+        /* 테이블 스타일 */
+        #comment-list_1 {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0px 0px 20px rgba(0,0,0,0.15);
+        }
+        #comment-list_1 th, #comment-list_1 td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        #comment-list_1 th {
+            background-color: #f8f8f8;
+        }
+        #comment-list_1 tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* 댓글 작성자 스타일 */
+        #comment-list_1 td:nth-child(1) {
+            font-weight: bold;
+        }
+
+        /* 댓글 내용 스타일 */
+        #comment-list_1 td:nth-child(2) {
+            color: #555;
+        }
+
+        /* '수정' 링크 스타일 */
+        #comment-list_1 td:nth-child(3) a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        #comment-list_1 td:nth-child(3) a:hover {
+            text-decoration: underline;
+        }
 
         /* 댓글 작성 영역 스타일 */
         #comment-write {
@@ -112,15 +148,20 @@
         //리뷰 테이블 한 행씩 추가하기위한 스크립트
         const addCommentToTable = (comment) => {
             const table = document.getElementById('comment-list');
-            const newRow = table.insertRow(-1);
+            // insertRow(-1); = 테이블 젤 위에 행이 생성이 됨
+            // insertRow(0); = 테이블 젤 아래에 행이 생성이 됨
+            const newRow = table.insertRow(0);
 
             const cell1 = newRow.insertCell(0);
             const cell2 = newRow.insertCell(1);
             const cell3 = newRow.insertCell(2);
+            const cell4 = newRow.insertCell(3);
+
 
             cell1.innerHTML = comment.commentWriter;
             cell2.innerHTML = comment.commentContents;
-            cell3.innerHTML = `<a href="/comment/edit/${comment.id}">수정</a> <a href="/comment/delete/${comment.id}" class="btn btn-danger">삭제</a>`;
+            cell3.innerHTML = `<a href="/comment/edit/${comment.id}">수정</a>`;
+            cell4.innerHTML = `<a href="/comment/delete/${comment.id}" class="btn btn-danger">삭제</a>`;
         };
 
 
@@ -328,24 +369,32 @@
 
 
 
-    <table id="comment-list">
+    <table id="comment-list_1">
         <tr>
             <th>작성자</th>
             <th>내용</th>
             <th>작업</th>
         </tr>
-        <tr th:each="comment : ${comments}">
-            <td th:text="${comment.commentWriter}"></td>
-            <td th:text="${comment.commentContents}"></td>
-            <td>
-                <!--로그인을 한 유저, 로그인을 한 유저의 name 과 commentWriter가 일치하면 수정과 삭제버튼 활성화-->
-                <a th:if="${member != null and comment.commentWriter == member.name}"
-                   th:href="@{/comment/edit/{commentId}(commentId=${comment.id})}">수정</a>
-                <a th:if="${member != null and comment.commentWriter == member.name}"
-                   th:href="@{/comment/delete/{id}(id=${comment.id})}" class="btn btn-danger">삭제</a>
-            </td>
+        <table id="comment-list">
+            <tr th:each="comment : ${comments}">
+                <td th:text="${comment.commentWriter}"></td>
+                <td th:text="${comment.commentContents}"></td>
+                <td>
+                    <!--로그인을 한 유저, 로그인을 한 유저의 name 과 commentWriter가 일치하면 수정버튼 활성화-->
+                    <a th:if="${member != null and comment.commentWriter == member.name}"
+                       th:href="@{/comment/edit/{commentId}(commentId=${comment.id})}">수정</a>
+                </td>
+                <td>
+                    <!--로그인을 한 유저, 로그인을 한 유저의 name 과 commentWriter가 일치하면 삭제버튼 활성화-->
+                    <a th:if="${member != null and comment.commentWriter == member.name}"
+                       th:href="@{/comment/delete/{commentId}(commentId=${comment.id})}"
+                       class="btn btn-danger">삭제</a>
+                </td>
+
+            </tr>
+        </table>
     </table>
-    </table>
+
 </div>
 
 </html>

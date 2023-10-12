@@ -51,12 +51,13 @@ public class CommentService {
     }
 
     public List<CommentDTO> findByItemId(Long itemId) {
-        List<CommentEntity> commentEntities = commentRepository.findByItemId(itemId);
+        List<CommentEntity> commentEntities = commentRepository.findByItemIdOrderByCreationDateDesc(itemId);
 
         return commentEntities.stream()
                 .map(commentEntity -> CommentDTO.toCommentDTO(commentEntity, itemId))
                 .collect(Collectors.toList());
     }
+
 
     // 수정 메서드
     public CommentDTO update(Long id, CommentDTO commentDTO) throws Exception {

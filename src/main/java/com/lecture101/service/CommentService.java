@@ -83,6 +83,7 @@ public class CommentService {
         return itemId; // 댓글이 삭제된 상품의 ID를 반환합니다.
     }
 
+    // 페이징 메서드
     public Page<CommentDTO> findCommentsByItemId(Long itemId, Pageable pageable) {
         Page<CommentEntity> commentEntitiesPage = commentRepository.findPageByItemIdOrderByCreationDateDesc(itemId, pageable);
         return commentEntitiesPage.map(commentEntity -> CommentDTO.toCommentDTO(commentEntity, itemId));

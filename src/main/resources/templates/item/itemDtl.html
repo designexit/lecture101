@@ -7,6 +7,11 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <style>
+        li {
+            display: inline-block;
+            margin-right: 5px;
+        }
+
         /* 테이블 스타일 */
         #comment-list {
             width: 100%;
@@ -396,14 +401,30 @@
         </tr>
     </table>
 
-
+<!--    페이징기능 부분-->
     <div>
-        <ul>
-            <li th:each="pageNumber : ${#numbers.sequence(0, commentsPage.totalPages - 1)}">
-                <a th:href="@{/item/{itemId}(itemId=${item.id},page=${pageNumber})}"
-                   th:text="${pageNumber + 1}">1</a>
-            </li>
-        </ul>
+        <nav>
+            <ul style="list-style-type: none; padding: 0;">
+                <li th:if="${commentsPage.number > 0}" style="display: inline-block; margin-right: 5px;">
+                    <a th:href="@{/item/{itemId}(itemId=${item.id},page=${commentsPage.number - 1})}">Previous</a>
+
+                </li>
+
+                <li th:each="pageNumber : ${#numbers.sequence(0, commentsPage.totalPages-1)}" style="display: inline-block; margin-right: 5px;">
+                    <a th:href="@{/item/{itemId}(itemId=${item.id},page=${pageNumber})}"
+                       th:text="${pageNumber + 1}">1</a>
+                </li>
+
+                <li th:if="${commentsPage.number + 1 < commentsPage.totalPages}" style="display: inline-block; margin-right: 5px;">
+                    <a th:href="@{/item/{itemId}(itemId=${item.id},page=${commentsPage.number + 1})}">Next</a>
+
+                </li>
+            </ul>
+        </nav>
+
+
+
+
     </div>
 
 </div>

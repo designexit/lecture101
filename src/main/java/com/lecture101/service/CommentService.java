@@ -8,6 +8,10 @@ import com.lecture101.entity.Item;
 import com.lecture101.repository.CommentRepository;
 import com.lecture101.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -77,6 +81,11 @@ public class CommentService {
         commentRepository.delete(commentToDelete);
 
         return itemId; // 댓글이 삭제된 상품의 ID를 반환합니다.
+    }
+
+    public Page<CommentDTO> findCommentsByItemId(Long itemId, Pageable pageable) {
+        Page<CommentEntity> commentEntitiesPage = commentRepository.findPageByItemIdOrderByCreationDateDesc(itemId, pageable);
+        return commentEntitiesPage.map(commentEntity -> CommentDTO.toCommentDTO(commentEntity, itemId));
     }
 
 

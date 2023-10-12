@@ -117,12 +117,16 @@ public class ItemController {
 
     // 1011 ktb 수정
     @GetMapping(value = "/item/{itemId}")
-    public String itemDtl(Model model, @PathVariable("itemId") Long itemId, @AuthenticationPrincipal User user){
+    public String itemDtl(Model model, @PathVariable("itemId") Long itemId,
+                          @AuthenticationPrincipal User user,
+                          @RequestParam(required = false, defaultValue = "0") int page) {
+
+        Pageable pageable = PageRequest.of(page, 5);
+        Page<CommentDTO> commentsPage = commentService.findCommentsByItemId(itemId, pageable);
+        model.addAttribute("commentsPage", commentsPage);
+
         ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
         model.addAttribute("item", itemFormDto);
-
-        List<CommentDTO> comments = commentService.findByItemId(itemId); // 댓글 데이터를 조회합니다.
-        model.addAttribute("comments", comments); // 댓글 데이터를 모델에 추가합니다.
 
         if (user != null) {
             Member member = memberService.findByEmail(user.getUsername());

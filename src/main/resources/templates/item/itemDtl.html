@@ -377,25 +377,34 @@
             <th>내용</th>
             <th>작업</th>
         </tr>
-        <table id="comment-list">
-            <tr th:each="comment : ${comments}">
-                <td th:text="${comment.commentWriter}"></td>
-                <td th:text="${comment.commentContents}"></td>
-                <td>
-                    <!--로그인을 한 유저, 로그인을 한 유저의 name 과 commentWriter가 일치하면 수정버튼 활성화-->
-                    <a th:if="${member != null and comment.commentWriter == member.name}"
-                       th:href="@{/comment/edit/{commentId}(commentId=${comment.id})}">수정</a>
-                </td>
-                <td>
-                    <!--로그인을 한 유저, 로그인을 한 유저의 name 과 commentWriter가 일치하면 삭제버튼 활성화-->
-                    <a th:if="${member != null and comment.commentWriter == member.name}"
-                       th:href="@{/comment/delete/{commentId}(commentId=${comment.id})}"
-                       class="btn btn-danger">삭제</a>
-                </td>
-
-            </tr>
-        </table>
     </table>
+    <table id="comment-list">
+        <tr th:each="comment : ${commentsPage.content}">
+            <td th:text="${comment.commentWriter}"></td>
+            <td th:text="${comment.commentContents}"></td>
+            <td>
+                <!--로그인을 한 유저, 로그인을 한 유저의 name 과 commentWriter가 일치하면 수정버튼 활성화-->
+                <a th:if="${member != null and comment.commentWriter == member.name}"
+                   th:href="@{/comment/edit/{commentId}(commentId=${comment.id})}">수정</a>
+            </td>
+            <td>
+                <!--로그인을 한 유저, 로그인을 한 유저의 name 과 commentWriter가 일치하면 삭제버튼 활성화-->
+                <a th:if="${member != null and comment.commentWriter == member.name}"
+                   th:href="@{/comment/delete/{commentId}(commentId=${comment.id})}"
+                   class="btn btn-danger">삭제</a>
+            </td>
+        </tr>
+    </table>
+
+
+    <div>
+        <ul>
+            <li th:each="pageNumber : ${#numbers.sequence(0, commentsPage.totalPages - 1)}">
+                <a th:href="@{/item/{itemId}(itemId=${item.id},page=${pageNumber})}"
+                   th:text="${pageNumber + 1}">1</a>
+            </li>
+        </ul>
+    </div>
 
 </div>
 

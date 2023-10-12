@@ -48,7 +48,7 @@
     <div th:if="${not #strings.isEmpty(itemSearchDto.searchQuery)}" class="center">
         <p class="h3 font-weight-bold" th:text="${itemSearchDto.searchQuery} + '검색 결과'"></p>
     </div>
-
+<div>2222</div>
     <div class="row">
         <th:block th:each="item, status: ${items.getContent()}">
             <div class="col-md-4 margin">
@@ -56,9 +56,13 @@
                     <a th:href="'/item/' +${item.id}" class="text-dark">
                         <img th:src="${item.imgUrl}" class="card-img-top" th:alt="${item.itemNm}" height="400">
                         <div class="card-body">
+                            <div th:each="type : ${T(com.lecture101.constant.Category).values()}"
+                                th:if="${item.Category == type}"
+                                th:text="${type.displayName}">
+                            </div>
                             <h4 class="card-title">[[${item.itemNm}]]</h4>
                             <p class="card-text">[[${item.itemDetail}]]</p>
-                            <h3 class="card-title text-danger">[[${item.price}]]원</h3>
+                            <h3 class="card-title text-danger" th:text="${#numbers.formatInteger(item.price, 3, 'COMMA')} + '원'">[[${item.price}]]</h3>
                         </div>
                     </a>
                 </div>

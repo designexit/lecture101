@@ -21,16 +21,16 @@ public class Item extends BaseEntity {
     @Id
     @Column(name="item_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;       //상품 코드
+    private Long id;       // 클래스 코드
 
     @Column(nullable = false, length = 50)
-    private String itemNm; //상품명
+    private String itemNm; // 클래스명
 
     @Column(name="price", nullable = false)
     private int price; //가격
 
     @Column(nullable = false)
-    private int stockNumber; //재고수량
+    private int stockNumber; // 인원수
 
     @Lob
     @Column(nullable = false)
@@ -58,7 +58,7 @@ public class Item extends BaseEntity {
     public void removeStock(int stockNumber){
         int restStock = this.stockNumber - stockNumber;
         if(restStock<0){
-            throw new OutOfStockException("상품의 재고가 부족 합니다. (현재 재고 수량: " + this.stockNumber + ")");
+            throw new OutOfStockException("선착순 마감되었습니다. (수강 가능 인원수: " + this.stockNumber + ")");
         }
         this.stockNumber = restStock;
     }

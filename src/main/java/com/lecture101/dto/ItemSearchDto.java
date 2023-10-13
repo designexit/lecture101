@@ -1,5 +1,6 @@
 package com.lecture101.dto;
 
+import com.lecture101.constant.Category;
 import com.lecture101.constant.ItemSellStatus;
 import com.lecture101.constant.LectureType;
 import lombok.Getter;
@@ -13,6 +14,8 @@ public class ItemSearchDto {
     private ItemSellStatus searchSellStatus;
 
     private LectureType searchTypeStatus;
+
+    private Category searchCategory;
 
     private String searchBy;
 

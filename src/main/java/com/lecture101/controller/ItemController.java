@@ -1,15 +1,19 @@
 package com.lecture101.controller;
 
+import com.lecture101.dto.CommentDTO;
 import com.lecture101.dto.ItemFormDto;
 import com.lecture101.dto.ItemSearchDto;
 import com.lecture101.entity.Item;
 import com.lecture101.entity.Member;
+import com.lecture101.service.CommentService;
 import com.lecture101.service.ItemService;
 import com.lecture101.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

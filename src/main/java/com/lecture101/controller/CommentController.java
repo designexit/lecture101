@@ -47,7 +47,7 @@ public class CommentController {
         return "editComment";
     }
 
-    // 리뷰 수정
+
     // 리뷰 수정
     @PostMapping("/update/{id}")
     public String updateComment(@PathVariable Long id, @ModelAttribute CommentDTO commentDTO, RedirectAttributes redirectAttributes) {

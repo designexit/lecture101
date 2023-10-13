@@ -6,6 +6,12 @@
 <head>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <!--달력 내용 추가한 시작 부분-->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!--달력 내용 추가한 끝 부분-->
 </head>
 
 <!-- 사용자 스크립트 추가 -->
@@ -212,6 +218,38 @@
     <div th:each="itemImg : ${item.itemImgDtoList}" class="text-center">
         <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded mgb-15" width="800">
     </div>
+
+    <!--달력 내용 추가한 시작 부분-->
+    <div id="calendar-widget">
+        <h3>달력</h3>
+        <div id="datepicker"></div>
+        <div id="selected-date">선택한 날짜: </div>
+    </div>
+    <script>
+
+        $(function() {
+
+            var classStartDate = "[[${item.classStartDate}]]";
+            var classEndDate = "[[${item.classEndDate}]]";
+
+
+            var startDate = new Date(classStartDate);
+            var endDate = new Date(classEndDate);
+
+
+            $("#datepicker").datepicker({
+                dateFormat: "yy-mm-dd",
+                minDate: startDate,
+                maxDate: endDate,
+                onSelect: function(dateText) {
+
+                    alert("선택한 날짜: " + dateText);
+                    $("#selected-date").text("선택한 날짜: " + dateText);
+                }
+            });
+        });
+    </script>
+    <!--달력 내용 추가한 끝 부분-->
 
 </div>
 

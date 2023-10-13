@@ -17,11 +17,13 @@
         function page(page){
             var searchDateType = $("#searchDateType").val();
             var searchSellStatus = $("#searchSellStatus").val();
+            var searchCategory = $("#searchCategory").val();
             var searchBy = $("#searchBy").val();
             var searchQuery = $("#searchQuery").val();
 
             location.href="/admin/items/" + page + "?searchDateType=" + searchDateType
             + "&searchSellStatus=" + searchSellStatus
+            + "&searchCategory=" + searchCategory
             + "&searchBy=" + searchBy
             + "&searchQuery=" + searchQuery;
         }
@@ -39,6 +41,7 @@
 </th:block>
 
 <div layout:fragment="content">
+    <h2>클래스 관리</h2>
 
     <form th:action="@{'/admin/items/' + ${items.number}}" role="form" method="get" th:object="${items}">
         <table class="table">
@@ -59,14 +62,6 @@
                 <td>
                     <a th:href="'/admin/item/'+${item.id}" th:text="${item.itemNm}"></a>
                 </td>
-                <!--<td th:each="type : ${T(com.lecture101.constant.Category).values()}"
-                    th:if="${item.Category == type and not #strings.isEmpty(type.displayName)}"
-                    th:text="${type.displayName} ?: '&nbsp;'">
-                </td>-->
-                <!--<td th:each="type : ${T(com.lecture101.constant.Category).values()}"
-                    th:if="${item.Category == type}"
-                    th:text="${#strings.isEmpty(type.displayName) ? '' : type.displayName}">
-                </td>-->
                 <td th:each="type : ${T(com.lecture101.constant.Category).values()}"
                     th:if="${item.Category == type}"
                     th:text="${#strings.isEmpty(type.displayName) ? '' : type.displayName}">
@@ -118,12 +113,17 @@
                 <option value="SELL">강의중</option>
                 <option value="SOLD_OUT">종료된 강의</option>
             </select>
-            <select th:field="*{searchTypeStatus}" class="form-control" style="width:auto;">
+            <select th:field="*{searchCategory}" class="form-control" style="width:auto;">
+                <option value="">카테고리(전체)</option>
+                <option th:each="category : ${T(com.lecture101.constant.Category).values()}"
+                        th:value="${category}" th:text="${category.displayName}"></option>
+            </select>
+            <!--<select th:field="*{searchTypeStatus}" class="form-control" style="width:auto;">
                 <option value="">클래스 타입(전체)</option>
                 <option value="ONE_TO_ONE">1:1 강의</option>
                 <option value="GROUP">그룹 강의</option>
                 <option value="ONLINE">온라인 강의</option>
-            </select>
+            </select>-->
             <select th:field="*{searchBy}" class="form-control" style="width:auto;">
                 <option value="itemNm">상품명</option>
                 <option value="createdBy">등록자</option>

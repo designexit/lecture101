@@ -108,9 +108,9 @@
 
         <div class="input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text">재고</span>
+                <span class="input-group-text">인원수</span>
             </div>
-            <input type="number" th:field="*{stockNumber}" class="form-control" placeholder="상품의 재고를 입력해주세요">
+            <input type="number" th:field="*{stockNumber}" class="form-control" placeholder="총 인원를 입력해주세요">
         </div>
         <p th:if="${#fields.hasErrors('stockNumber')}" th:errors="*{stockNumber}" class="fieldError">Incorrect data</p>
 
